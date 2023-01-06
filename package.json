@@ -1,6 +1,6 @@
 {
   "name": "belin.db",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An NPM package for creating a local JSON-based database",
   "main": "index.js",
   "repository": {

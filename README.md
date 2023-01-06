@@ -38,47 +38,47 @@ const db = new Database({
 
 ##### set(key, value)
 
-Set a key and a value
+Set a value to a key
 
 ##### get(key)
 
-Get a key with its values
+Get the value of a key
 
 ##### delete(key)
 
-Delete the key with its values
+Delete the value of a key
 
 ##### has(key)
 
-Check if has the key
+Check if a key exists
 
 ##### all()
 
-Get all the keys with them values
+Get the JSON file
 
 ##### clear()
 
-Delete all keys with them values
+Delete all saved data
 
 ##### replace(path)
 
-Replace the saved data in the file with the data from another file
+Replace all saved data with that of another JSON file
 
-##### push(key, element)
+##### push(key, item)
 
-Add an element to the key
+Push an item into an array
 
-##### pull(key, element)
+##### pull(key, item)
 
-Remove an element from the key
+Pull an item from an array
 
 ##### add(key, number)
 
-Add a number to the key
+Add a number to a key value
 
 ##### remove(key, number)
 
-Remove a number from the key
+Remove a number from a key value
 
 ### Example
 
@@ -97,8 +97,8 @@ db.has("a_b_c"); // true
 db.all(); // { "a": { "b": { "c": "value" }}}
 db.clear(); // {}
 db.replace("./file.json"); // {}
-db.push("a_b", "element"); // { "a": { "b": ["element"] }}
-db.unpush("a_b", "element"); // { "a": { "b": [] }}
+db.push("a_b", "item"); // { "a": { "b": ["item"] }}
+db.unpush("a_b", "item"); // { "a": { "b": [] }}
 db.add("a_c", 4); // { "a": { "b": [] }, { "c": 4 }}
 db.remove("a_c", 2); // { "a": { "b": [] }, { "c": 2 }}
 ```
