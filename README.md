@@ -13,7 +13,7 @@ npm install belin.db
 - Import the installed package
 
 ```js
-const Database = require("belin.db");
+const { Database } = require("belin.db");
 ```
 
 - Init the database
@@ -60,9 +60,9 @@ Get the JSON file
 
 Delete all saved data
 
-##### replace(path)
+##### importFrom(path)
 
-Replace all saved data with that of another JSON file
+Import data from another JSON file
 
 ##### push(key, item)
 
@@ -83,9 +83,9 @@ Remove a number from a key value
 ### Example
 
 ```js
-const Database = require("belin.db");
+const { Database } = require("belin.db");
 const db = new Database({
-  fileName: "./test/data.json",
+  fileName: "./database/test.json",
   separator: "_",
   belowZero: true,
 });
@@ -96,9 +96,9 @@ db.delete("a_b_c"); // { "a": { "b": {}}}
 db.has("a_b_c"); // true
 db.all(); // { "a": { "b": { "c": "value" }}}
 db.clear(); // {}
-db.replace("./file.json"); // {}
+db.importFrom("./file.json"); // {}
 db.push("a_b", "item"); // { "a": { "b": ["item"] }}
-db.unpush("a_b", "item"); // { "a": { "b": [] }}
+db.pull("a_b", "item"); // { "a": { "b": [] }}
 db.add("a_c", 4); // { "a": { "b": [] }, { "c": 4 }}
 db.remove("a_c", 2); // { "a": { "b": [] }, { "c": 2 }}
 ```
