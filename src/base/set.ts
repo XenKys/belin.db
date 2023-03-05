@@ -1,8 +1,8 @@
-export function set(data: any, path: any, value: any, separator: string = ".") {
+export function set(data, path, value, separator: string = ".") {
   if (path.includes(separator)) {
     let elements = path.split(separator),
       key = elements.pop(),
-      object = elements.reduce((a: any, b: any) => {
+      object = elements.reduce((a, b) => {
         if (typeof a[b] === "undefined") a[b] = {};
         if (typeof a[b] !== "object") a[b] = {};
 

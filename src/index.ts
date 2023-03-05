@@ -1,3 +1,1 @@
-import { Database } from "./class/index";
-
-export { Database };
+export * from "./class/Database";

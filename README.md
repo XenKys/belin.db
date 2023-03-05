@@ -19,11 +19,13 @@ const { Database } = require("belin.db");
 - Init the database
 
 ```js
-const db = new Database({
-  path: "./database.json", // The file path for the JSON file to save the data
-  separator: ".", // The separator symbol that you will use to split the data
-  belowZero: false, // If the numbers on the saved data can go below 0
-});
+const db = new Database(
+  "./database.json", // The file path for the JSON file to save the data
+  {
+    separator: ".", // The separator symbol that you will use to split the data
+    belowZero: false, // If the numbers on the saved data can go below 0
+  }
+);
 ```
 
 ## Database options
@@ -84,8 +86,7 @@ Remove a number from a key value
 
 ```js
 const { Database } = require("belin.db");
-const db = new Database({
-  fileName: "./database/test.json",
+const db = new Database("./database/test.json", {
   separator: "_",
   belowZero: true,
 });

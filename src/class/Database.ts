@@ -1,5 +1,5 @@
 import fs from "fs";
-import path from "path";
+import { extname, dirname } from "path";
 import {
   set,
   get,
@@ -14,6 +14,11 @@ import {
   remove,
 } from "../methods";
 
+export interface DatabaseOptions {
+  separator?: string;
+  belowZero?: boolean;
+}
+
 export class Database {
   public path: string;
   public separator: string;
@@ -22,31 +27,25 @@ export class Database {
   /**
    * Get or create a JSON file with the saved data
    *
+   * @param {string} path - The file path for the JSON file to save the data
    * @param {object} options - Options for the database
-   * @param {string} options.path - The file path for the JSON file to save the data
-   * @param {string} options.separator - The separator symbol that you will use to split the data
-   * @param {boolean} options.belowZero - If the numbers on the saved data can go below 0
    *
    * @returns {object} The JSON file
    */
-  constructor(options: {
-    path?: string;
-    separator?: string;
-    belowZero?: boolean;
-  }) {
-    this.path = options.path || "./database.json";
+  constructor(path?: string, options: DatabaseOptions = {}) {
+    this.path = path || "./database.json";
     this.separator = options.separator || ".";
     this.belowZero = options.belowZero || false;
 
-    if (path.extname(this.path) !== ".json")
+    if (extname(this.path) !== ".json")
       throw new Error("[belin.db] The path doesn't end with a JSON file");
 
     if (!fs.existsSync(this.path)) {
-      mkdirSyncRecursive(path.dirname(this.path));
+      mkdirSyncRecursive(dirname(this.path));
       fs.writeFileSync(this.path, "{}");
 
       function mkdirSyncRecursive(directory: string) {
-        const baseDir = path.dirname(directory);
+        const baseDir = dirname(directory);
         if (!fs.existsSync(baseDir)) {
           mkdirSyncRecursive(baseDir);
         }
@@ -137,7 +136,7 @@ export class Database {
    * @param {string} key - The name of the key
    * @param {any} item - The item
    *
-   * @returns {any} The key's value
+   * @returns {array} The key's value
    */
   push(key: string, item: any) {
     return push(this, key, item);
@@ -149,7 +148,7 @@ export class Database {
    * @param {string} key - The name of the key
    * @param {any} item - The item
    *
-   * @returns {any} The key's value
+   * @returns {array} The key's value
    */
   pull(key: string, item: any) {
     return pull(this, key, item);

@@ -1,12 +1,12 @@
 {
   "name": "belin.db",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An NPM package for creating a local JSON-based database",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CiccioFrollo/belin.db.git"
+    "url": "git+https://github.com/Frooollo/belin.db.git"
   },
   "keywords": [
     "database",
@@ -14,12 +14,12 @@
     "db",
     "json-db"
   ],
-  "author": "CiccioFrollo",
+  "author": "Frooollo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CiccioFrollo/belin.db/issues"
+    "url": "https://github.com/Frooollo/belin.db/issues"
   },
-  "homepage": "https://github.com/CiccioFrollo/belin.db#readme",
+  "homepage": "https://github.com/Frooollo/belin.db#readme",
   "dependencies": {
     "@types/node": "^18.11.18"
   }
