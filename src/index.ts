@@ -1,1 +1,1 @@
-export * from "./class/Database";
+export * from "./Database";

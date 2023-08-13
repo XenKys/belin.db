@@ -1,10 +1,11 @@
 export function pull(self: any, key: string, item: any) {
+  if (key === undefined)
+    throw new Error("[belin.db] Enter the name of the key");
   if (!self.has(key))
     throw new Error(
       "[belin.db] No key with this name was found in the saved data"
     );
-  if (!key) throw new Error("[belin.db] Enter the name of the key");
-  if (!item && item !== 0)
+  if (item === undefined)
     throw new Error("[belin.db] Enter the name of the value");
 
   let array = [];

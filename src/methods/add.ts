@@ -1,7 +1,9 @@
 export function add(self: any, key: string, number: number) {
+  if (key === undefined)
+    throw new Error("[belin.db] Enter the name of the key");
+  if (number === undefined)
+    throw new Error("[belin.db] Enter the name of the value");
   if (isNaN(number)) throw new TypeError("[belin.db] Enter a number");
-  if (!key) throw new Error("[belin.db] Enter the name of the key");
-  if (!number) throw new Error("[belin.db] Enter the name of the value");
 
   self.set(
     key,
