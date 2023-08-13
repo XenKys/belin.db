@@ -12,7 +12,7 @@ import {
   pull,
   add,
   remove,
-} from "../methods";
+} from "./methods";
 
 export interface DatabaseOptions {
   separator?: string;
