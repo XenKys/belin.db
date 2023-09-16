@@ -9,6 +9,8 @@ export function pull(self: Database, key: string, item: any): Array<any> {
     );
   if (item === undefined)
     throw new Error("[belin.db] Enter the name of the value");
+  if (!Array.isArray(self.get(key)))
+    throw new Error(`[belin.db] The value of '${key}' isn't an array`);
 
   self.set(
     key,
