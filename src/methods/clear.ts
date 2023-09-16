@@ -1,9 +1,8 @@
 import fs from "fs";
+import { Database } from "../Database";
 
-export function clear(self: any) {
+export function clear(self: Database): Record<string, any> {
   fs.writeFileSync(self.path, "{}");
 
-  const data = fs.readFileSync(self.path, "utf8");
-
-  return JSON.parse(data);
+  return self.all();
 }

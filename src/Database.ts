@@ -27,15 +27,13 @@ export class Database {
   /**
    * Get or create a JSON file with the saved data
    *
-   * @param {string} path - The file path for the JSON file to save the data
-   * @param {object} options - Options for the database
-   *
-   * @returns {object} The JSON file
+   * @param path - The file path for the JSON file to save the data
+   * @param options - Options for the database
    */
-  constructor(path?: string, options: DatabaseOptions = {}) {
-    this.path = path || "./database.json";
-    this.separator = options.separator || ".";
-    this.belowZero = options.belowZero || false;
+  constructor(path?: string, options?: DatabaseOptions) {
+    this.path = path ?? "./database.json";
+    this.separator = options?.separator ?? ".";
+    this.belowZero = options?.belowZero ?? false;
 
     if (extname(this.path) !== ".json")
       throw new Error("[belin.db] The path doesn't end with a JSON file");
@@ -59,122 +57,100 @@ export class Database {
   /**
    * Set a value to a key
    *
-   * @param {string} key - The name of the key
-   * @param {any} value - The key's value
-   *
-   * @returns {any} The key's value
+   * @param key - The name of the key
+   * @param value - The key's value
    */
-  set(key: string, value: any) {
+  set(key: string, value: any): any {
     return set(this, key, value);
   }
 
   /**
    * Get the value of a key
    *
-   * @param {string} key - The name of the key
-   *
-   * @returns {any} The key's value
+   * @param key - The name of the key
    */
-  get(key: string) {
+  get(key: string): any {
     return get(this, key);
   }
 
   /**
    * Delete the value of a key
    *
-   * @param {string} key - The name of the key
-   *
-   * @returns {boolean} true
+   * @param key - The name of the key
    */
-  delete(key: string) {
-    return del(this, key);
+  delete(key: string): void {
+    del(this, key);
   }
 
   /**
    * Check if a key exists
    *
-   * @param {string} key - The name of the key
-   *
-   * @returns {boolean} If the key exists
+   * @param key - The name of the key
    */
-  has(key: string) {
+  has(key: string): boolean {
     return has(this, key);
   }
 
   /**
    * Get the JSON file
-   *
-   * @returns {object} The JSON file
    */
-  all() {
+  all(): Record<string, any> {
     return all(this);
   }
 
   /**
    * Delete all saved data
-   *
-   * @returns {object} The JSON file
    */
-  clear() {
+  clear(): Record<string, any> {
     return clear(this);
   }
 
   /**
    * Import data from another JSON file
    *
-   * @param {string} path - The path of the JSON file
-   *
-   * @returns {object} The JSON file
+   * @param path - The path of the JSON file
    */
-  importFrom(path: string) {
+  importFrom(path: string): Record<string, any> {
     return importFrom(this, path);
   }
 
   /**
    * Push an item into an array
    *
-   * @param {string} key - The name of the key
-   * @param {any} item - The item
-   *
-   * @returns {array} The key's value
+   * @param key - The name of the key
+   * @param item - The item
    */
-  push(key: string, item: any) {
+  push(key: string, item: any): Array<any> {
     return push(this, key, item);
   }
 
   /**
    * Pull an item from an array
    *
-   * @param {string} key - The name of the key
-   * @param {any} item - The item
-   *
-   * @returns {array} The key's value
+   * @param key - The name of the key
+   * @param item - The item
    */
-  pull(key: string, item: any) {
+  pull(key: string, item: any): Array<any> {
     return pull(this, key, item);
   }
 
   /**
    * Add a number to a key value
    *
-   * @param {string} key - The name of the key
-   * @param {number} number - The number
-   *
-   * @returns {any} The key's value
+   * @param key - The name of the key
+   * @param number - The number
    */
-  add(key: string, number: number) {
+  add(key: string, number: number): number {
     return add(this, key, number);
   }
 
   /**
    * Remove a number from a key value
    *
-   * @param {string} key - The name of the key
-   * @param {number} number - The number
-   *
-   * @returns {any} The key's value
+   * @param key - The name of the key
+   * @param number - The number
    */
-  remove(key: string, number: number) {
+  remove(key: string, number: number): number {
     return remove(this, key, number);
   }
 }

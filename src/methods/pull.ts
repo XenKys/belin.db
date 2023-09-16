@@ -1,4 +1,6 @@
-export function pull(self: any, key: string, item: any) {
+import { Database } from "../Database";
+
+export function pull(self: Database, key: string, item: any): Array<any> {
   if (key === undefined)
     throw new Error("[belin.db] Enter the name of the key");
   if (!self.has(key))
@@ -8,13 +10,10 @@ export function pull(self: any, key: string, item: any) {
   if (item === undefined)
     throw new Error("[belin.db] Enter the name of the value");
 
-  let array = [];
-
-  if (self.get(key)) array = self.get(key);
-
-  array = array.filter((i: any) => i !== item);
-
-  self.set(key, array);
+  self.set(
+    key,
+    self.get(key).filter((i: any) => i !== item)
+  );
 
   return self.get(key);
 }

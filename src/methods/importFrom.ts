@@ -1,7 +1,8 @@
 import fs from "fs";
 import { extname } from "path";
+import { Database } from "../Database";
 
-export function importFrom(self: any, path: string) {
+export function importFrom(self: Database, path: string): Record<string, any> {
   if (!path)
     throw new Error(
       "[belin.db] Enter the path of the file from which you want to replace the saved data"
@@ -13,7 +14,5 @@ export function importFrom(self: any, path: string) {
 
   fs.writeFileSync(self.path, fs.readFileSync(path, "utf8"));
 
-  const data = fs.readFileSync(self.path, "utf8");
-
-  return JSON.parse(data);
+  return self.all();
 }

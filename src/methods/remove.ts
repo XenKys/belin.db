@@ -1,4 +1,6 @@
-export function remove(self: any, key: string, number: number) {
+import { Database } from "../Database";
+
+export function remove(self: Database, key: string, number: number): number {
   if (key === undefined)
     throw new Error("[belin.db] Enter the name of the key");
   if (number === undefined)
