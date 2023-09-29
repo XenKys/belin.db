@@ -2,9 +2,7 @@ import type { Database } from "../Database";
 import { get as baseGet } from "../base";
 
 export function get(self: Database, key: string): any {
-  if (!key) throw new Error("[belin.db] Enter the name of the key");
+  if (!key) throw new Error("[belin.db] Enter a valid key");
 
-  const data = self.all();
-
-  return baseGet(data, key, self.separator);
+  return baseGet(self.all(), key, self.separator);
 }

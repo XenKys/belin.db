@@ -2,9 +2,7 @@ import type { Database } from "../Database";
 import { get as baseGet } from "../base";
 
 export function has(self: Database, key: string): boolean {
-  if (!key) throw new Error("[belin.db] Enter the name of the key");
+  if (!key) throw new Error("[belin.db] Enter a valid key");
 
-  const data = self.all();
-
-  return baseGet(data, key, self.separator) !== undefined;
+  return baseGet(self.all(), key, self.separator) !== undefined;
 }
