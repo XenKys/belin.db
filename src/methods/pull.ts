@@ -1,8 +1,7 @@
 import type { Database } from "../Database";
 
 export function pull(self: Database, key: string, item: any): Array<any> {
-  if (key === undefined)
-    throw new Error("[belin.db] Enter the name of the key");
+  if (!key) throw new Error("[belin.db] Enter the name of the key");
   if (!self.has(key))
     throw new Error(
       "[belin.db] No key with this name was found in the saved data"

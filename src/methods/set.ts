@@ -3,8 +3,7 @@ import { set as baseSet } from "../base";
 import fs from "fs";
 
 export function set(self: Database, key: string, value: any): any {
-  if (key === undefined)
-    throw new Error("[belin.db] Enter the name of the key");
+  if (!key) throw new Error("[belin.db] Enter the name of the key");
   if (value === undefined)
     throw new Error("[belin.db] Enter the name of the value");
 
