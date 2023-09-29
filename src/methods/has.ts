@@ -6,5 +6,5 @@ export function has(self: Database, key: string): boolean {
 
   const data = self.all();
 
-  return baseGet(data, key, self.separator) !== undefined ? true : false;
+  return baseGet(data, key, self.separator) !== undefined;
 }

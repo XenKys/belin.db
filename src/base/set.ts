@@ -1,4 +1,9 @@
-export function set(data, path, value, separator: string = ".") {
+export function set(
+  data: Record<string, any>,
+  path: string,
+  value: any,
+  separator: string
+) {
   if (path.includes(separator)) {
     let elements = path.split(separator),
       key = elements.pop(),
