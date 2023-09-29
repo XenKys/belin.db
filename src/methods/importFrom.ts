@@ -1,6 +1,6 @@
 import fs from "fs";
 import { extname } from "path";
-import { Database } from "../Database";
+import type { Database } from "../Database";
 
 export function importFrom(self: Database, path: string): Record<string, any> {
   if (!path)

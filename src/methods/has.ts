@@ -1,4 +1,4 @@
-import { Database } from "../Database";
+import type { Database } from "../Database";
 import { get as baseGet } from "../base";
 
 export function has(self: Database, key: string): boolean {

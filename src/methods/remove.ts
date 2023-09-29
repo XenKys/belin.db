@@ -1,4 +1,4 @@
-import { Database } from "../Database";
+import type { Database } from "../Database";
 
 export function remove(self: Database, key: string, number: number): number {
   if (key === undefined)

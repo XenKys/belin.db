@@ -1,5 +1,5 @@
 import fs from "fs";
-import { Database } from "../Database";
+import type { Database } from "../Database";
 
 export function clear(self: Database): Record<string, any> {
   fs.writeFileSync(self.path, "{}");

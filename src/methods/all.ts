@@ -1,5 +1,5 @@
 import fs from "fs";
-import { Database } from "../Database";
+import type { Database } from "../Database";
 
 export function all(self: Database): Record<string, any> {
   return JSON.parse(fs.readFileSync(self.path, "utf8"));

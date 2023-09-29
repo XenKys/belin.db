@@ -1,4 +1,4 @@
-import { Database } from "../Database";
+import type { Database } from "../Database";
 
 export function pull(self: Database, key: string, item: any): Array<any> {
   if (key === undefined)

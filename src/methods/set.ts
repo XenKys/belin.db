@@ -1,4 +1,4 @@
-import { Database } from "../Database";
+import type { Database } from "../Database";
 import { set as baseSet } from "../base";
 import fs from "fs";
 
