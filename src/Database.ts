@@ -25,7 +25,7 @@ export class Database {
   public belowZero: boolean;
 
   /**
-   * Get or create a JSON file with the saved data
+   * Manage the data
    *
    * @param path - The file path for the JSON file to save the data
    * @param options - Options for the database
@@ -55,9 +55,9 @@ export class Database {
   }
 
   /**
-   * Set a value to a key
+   * Set the value of a key
    *
-   * @param key - The name of the key
+   * @param key - The key
    * @param value - The key's value
    */
   set(key: string, value: any): any {
@@ -67,16 +67,16 @@ export class Database {
   /**
    * Get the value of a key
    *
-   * @param key - The name of the key
+   * @param key - The key
    */
   get(key: string): any {
     return get(this, key);
   }
 
   /**
-   * Delete the value of a key
+   * Delete a key
    *
-   * @param key - The name of the key
+   * @param key - The key
    */
   delete(key: string): void {
     del(this, key);
@@ -85,7 +85,7 @@ export class Database {
   /**
    * Check if a key exists
    *
-   * @param key - The name of the key
+   * @param key - The key
    */
   has(key: string): boolean {
     return has(this, key);
@@ -117,7 +117,7 @@ export class Database {
   /**
    * Push an item into an array
    *
-   * @param key - The name of the key
+   * @param key - The key
    * @param item - The item
    */
   push(key: string, item: any): Array<any> {
@@ -127,7 +127,7 @@ export class Database {
   /**
    * Pull an item from an array
    *
-   * @param key - The name of the key
+   * @param key - The key
    * @param item - The item
    */
   pull(key: string, item: any): Array<any> {
@@ -137,7 +137,7 @@ export class Database {
   /**
    * Add a number to a key value
    *
-   * @param key - The name of the key
+   * @param key - The key
    * @param number - The number
    */
   add(key: string, number: number): number {
@@ -147,7 +147,7 @@ export class Database {
   /**
    * Remove a number from a key value
    *
-   * @param key - The name of the key
+   * @param key - The key
    * @param number - The number
    */
   remove(key: string, number: number): number {

@@ -30,17 +30,16 @@ const db = new Database(
 
 ## Database options
 
-| **Key**   | **Value type** | **Description**                                          | **Default value**     | **Optional?** |
-| --------- | -------------- | -------------------------------------------------------- | --------------------- | ------------- |
-| path      | _String_       | The file path for the JSON file to save the data         | _**./database.json**_ | Yes           |
-| separator | _String_       | The separator symbol that you will use to split the data | _**.**_               | Yes           |
-| belowZero | _Boolean_      | If the numbers on the saved data can go below 0          | _**false**_           | Yes           |
+| **Key**   | **Value type** | **Description**                                          | **Default value** | **Optional?** |
+| --------- | -------------- | -------------------------------------------------------- | ----------------- | ------------- |
+| separator | _String_       | The separator symbol that you will use to split the data | _**.**_           | Yes           |
+| belowZero | _Boolean_      | If the numbers on the saved data can go below 0          | _**false**_       | Yes           |
 
 ## All Methods
 
 ##### set(key, value)
 
-Set a value to a key
+Set the value of a key
 
 ##### get(key)
 
@@ -48,7 +47,7 @@ Get the value of a key
 
 ##### delete(key)
 
-Delete the value of a key
+Delete a key
 
 ##### has(key)
 
