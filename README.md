@@ -73,6 +73,34 @@ Push an item into an array
 
 Pull an item from an array
 
+#### filter(key, predicate, thisArg?)
+
+Returns the elements of an array that meet the condition specified in a callback function
+
+#### find(key, predicate, thisArg?)
+
+Returns the value of the first element in the array where predicate is true, and undefined otherwise
+
+#### map(key, callbackfn, thisArg?)
+
+Calls a defined callback function on each element of an array, and returns an array that contains the results
+
+#### random(key)
+
+Get an item of an array randomly
+
+#### size(key)
+
+Get the size of an array
+
+#### some(key, predicate, thisArg?)
+
+Determines whether the specified callback function returns true for any element of an array
+
+#### sort(key, compareFn)
+
+Sorts an array in place
+
 ##### add(key, number)
 
 Add a number to a key value

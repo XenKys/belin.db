@@ -12,6 +12,13 @@ import {
   pull,
   add,
   remove,
+  filter,
+  find,
+  map,
+  random,
+  some,
+  sort,
+  size,
 } from "./methods";
 
 export interface DatabaseOptions {
@@ -132,6 +139,85 @@ export class Database {
    */
   pull(key: string, item: any): Array<any> {
     return pull(this, key, item);
+  }
+
+  /**
+   * Returns the elements of an array that meet the condition specified in a callback function
+   *
+   * @param key - The key
+   */
+  filter(
+    key: string,
+    predicate: (value: any, index: number, array: any[]) => boolean,
+    thisArg?: any
+  ): Array<any> {
+    return filter(this, key, predicate, thisArg);
+  }
+
+  /**
+   * Returns the value of the first element in the array where predicate is true, and undefined otherwise
+   *
+   * @param key - The key
+   */
+  find(
+    key: string,
+    predicate: (value: any, index: number, obj: Array<any>) => boolean,
+    thisArg?: any
+  ): any {
+    return find(this, key, predicate, thisArg);
+  }
+
+  /**
+   * Calls a defined callback function on each element of an array, and returns an array that contains the results
+   *
+   * @param key - The key
+   */
+  map(
+    key: string,
+    callbackfn: (value: any, index: number, array: Array<any>) => unknown,
+    thisArg?: any
+  ): Array<unknown> {
+    return map(this, key, callbackfn, thisArg);
+  }
+
+  /**
+   * Get an item of an array randomly
+   *
+   * @param key - The key
+   */
+  random(key: string): Array<any> {
+    return random(this, key);
+  }
+
+  /**
+   * Get the size of an array
+   *
+   * @param key - The key
+   */
+  size(key: string): number {
+    return size(this, key);
+  }
+
+  /**
+   * Determines whether the specified callback function returns true for any element of an array
+   *
+   * @param key - The key
+   */
+  some(
+    key: string,
+    predicate: (value: any, index: number, array: Array<any>) => unknown,
+    thisArg?: any
+  ): boolean {
+    return some(this, key, predicate, thisArg);
+  }
+
+  /**
+   * Sorts an array in place
+   *
+   * @param key - The key
+   */
+  sort(key: string, compareFn?: (a: any, b: any) => number): Array<any> {
+    return sort(this, key, compareFn);
   }
 
   /**

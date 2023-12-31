@@ -6,7 +6,7 @@ export function push(self: Database, key: string, item: any): Array<any> {
   if (!Array.isArray(self.get(key)))
     throw new Error(`[belin.db] The value of '${key}' isn't an array`);
 
-  let array = self.has(key) ? self.get(key) : [];
+  let array: Array<any> = self.has(key) ? self.get(key) : [];
 
   array.push(item);
 
