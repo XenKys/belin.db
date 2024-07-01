@@ -8,9 +8,11 @@ export function pull(self: Database, key: string, item: any): Array<any> {
   if (!Array.isArray(self.get(key)))
     throw new Error(`[belin.db] The value of '${key}' isn't an array`);
 
+  let array: Array<any> = self.get(key);
+
   self.set(
     key,
-    self.get(key).filter((i: any) => i !== item)
+    array.filter((i: any) => i !== item)
   );
 
   return self.get(key);
