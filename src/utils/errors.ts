@@ -2,11 +2,7 @@ export class BelinDBError extends Error {
   override name: string = "BelinDBError";
 
   constructor(error: Errors, key?: string) {
-    let message: string = error;
-
-    if (key) message.replace(/{key}/g, key);
-
-    super(`[belin.db] ${message}`);
+    super(`[belin.db] ${error.replace(/{key}/g, key)}`);
   }
 }
 
