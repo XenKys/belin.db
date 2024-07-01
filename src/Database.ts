@@ -39,8 +39,8 @@ export class Database {
    */
   constructor(path?: string, options?: DatabaseOptions) {
     this.path = path ?? "./database.json";
-    this.separator = options?.separator ?? ".";
-    this.belowZero = options?.belowZero ?? false;
+    this.separator = options.separator ?? ".";
+    this.belowZero = options.belowZero ?? false;
 
     if (extname(this.path) !== ".json")
       throw new BelinDBError(Errors.InvalidPath);
