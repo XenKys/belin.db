@@ -27,9 +27,9 @@ export interface DatabaseOptions {
 }
 
 export class Database {
-  public path: string;
-  public separator: string;
-  public belowZero: boolean;
+  path: string;
+  separator: string;
+  belowZero: boolean;
 
   /**
    * Manage the data
