@@ -7,7 +7,6 @@ import {
   has,
   all,
   clear,
-  importFrom,
   push,
   pull,
   add,
@@ -110,15 +109,6 @@ export class Database {
    */
   clear(): Record<string, any> {
     return clear(this);
-  }
-
-  /**
-   * Import data from another JSON file
-   *
-   * @param path - The path of the JSON file
-   */
-  importFrom(path: string): Record<string, any> {
-    return importFrom(this, path);
   }
 
   /**
