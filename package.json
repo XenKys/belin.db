@@ -1,7 +1,7 @@
 {
   "name": "belin.db",
-  "version": "1.0.6",
-  "description": "An NPM package for creating a local JSON-based database",
+  "version": "1.1.0",
+  "description": "A module for creating a local JSON-based database",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
@@ -9,10 +9,10 @@
     "url": "git+https://github.com/XenKys/belin.db.git"
   },
   "keywords": [
-    "database",
-    "json-database",
     "db",
-    "json-db"
+    "database",
+    "json",
+    "local"
   ],
   "author": "XenKys",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "url": "https://github.com/XenKys/belin.db/issues"
   },
   "homepage": "https://github.com/XenKys/belin.db#readme",
-  "dependencies": {
-    "@types/node": "^18.19.4"
+  "devDependencies": {
+    "@types/node": "^20.14.9"
   }
 }
