@@ -1,10 +1,11 @@
 import type { Database } from "../Database";
 import { set as baseSet } from "../base";
 import fs from "fs";
+import { BelinDBError, Errors } from "../utils";
 
 export function set(self: Database, key: string, value: any): any {
-  if (!key) throw new Error("[belin.db] Enter a valid key");
-  if (value === undefined) throw new Error("[belin.db] Enter the value");
+  if (!key) throw new BelinDBError(Errors.InvalidKey);
+  if (value === undefined) throw new BelinDBError(Errors.InvalidValue);
 
   const data = baseSet(self.all(), key, value, self.separator);
 

@@ -1,4 +1,5 @@
 import type { Database } from "../Database";
+import { BelinDBError, Errors } from "../utils";
 
 export function find(
   self: Database,
@@ -6,11 +7,10 @@ export function find(
   predicate: (value: any, index: number, obj: Array<any>) => boolean,
   thisArg?: any
 ): any {
-  if (!key) throw new Error("[belin.db] Enter a valid key");
-  if (!self.has(key))
-    throw new Error(`[belin.db] '${key}' not found in the data`);
+  if (!key) throw new BelinDBError(Errors.InvalidKey);
+  if (!self.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
   if (!Array.isArray(self.get(key)))
-    throw new Error(`[belin.db] The value of '${key}' isn't an array`);
+    throw new BelinDBError(Errors.DataNotAnArray);
 
   return self.get(key).find(predicate, thisArg);
 }

@@ -19,6 +19,7 @@ import {
   sort,
   size,
 } from "./methods";
+import { BelinDBError, Errors } from "./utils";
 
 export interface DatabaseOptions {
   separator?: string;
@@ -42,7 +43,7 @@ export class Database {
     this.belowZero = options?.belowZero ?? false;
 
     if (extname(this.path) !== ".json")
-      throw new Error("[belin.db] The path doesn't end with a JSON file");
+      throw new BelinDBError(Errors.InvalidPath);
 
     if (!fs.existsSync(this.path)) {
       mkdirSyncRecursive(dirname(this.path));
