@@ -46,18 +46,21 @@ export class Database {
       throw new BelinDBError(Errors.InvalidPath);
 
     if (!fs.existsSync(this.path)) {
-      mkdirSyncRecursive(dirname(this.path));
-      fs.writeFileSync(this.path, "{}");
+      this.mkdirSyncRecursive(dirname(this.path));
 
-      function mkdirSyncRecursive(directory: string) {
-        const baseDir = dirname(directory);
-        if (!fs.existsSync(baseDir)) {
-          mkdirSyncRecursive(baseDir);
-        }
-        if (!fs.existsSync(directory)) {
-          fs.mkdirSync(directory);
-        }
-      }
+      fs.writeFileSync(this.path, "{}");
+    }
+  }
+
+  private mkdirSyncRecursive(directory: string) {
+    const baseDir = dirname(directory);
+
+    if (!fs.existsSync(baseDir)) {
+      this.mkdirSyncRecursive(baseDir);
+    }
+
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory);
     }
   }
 
