@@ -6,7 +6,6 @@ export * from "./filter";
 export * from "./find";
 export * from "./get";
 export * from "./has";
-export * from "./importFrom";
 export * from "./map";
 export * from "./pull";
 export * from "./push";
