@@ -6,7 +6,7 @@ export class BelinDBError extends Error {
 
     if (key) message.replace(/{key}/g, key);
 
-    super(`[belin.db] ${error}`);
+    super(`[belin.db] ${message}`);
   }
 }
 
