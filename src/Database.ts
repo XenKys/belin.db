@@ -1,25 +1,7 @@
 import fs from "fs";
 import { extname, dirname } from "path";
-import {
-  set,
-  get,
-  del,
-  has,
-  all,
-  clear,
-  push,
-  pull,
-  add,
-  remove,
-  filter,
-  find,
-  map,
-  random,
-  some,
-  sort,
-  size,
-} from "./methods";
 import { BelinDBError, Errors } from "./utils";
+import { del, get, set } from "./base";
 
 export interface DatabaseOptions {
   separator?: string;
@@ -71,7 +53,14 @@ export class Database {
    * @param value - The key's value
    */
   set(key: string, value: any): any {
-    return set(this, key, value);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (value === undefined) throw new BelinDBError(Errors.InvalidValue);
+
+    const data = set(this.all(), key, value, this.separator);
+
+    fs.writeFileSync(this.path, JSON.stringify(data));
+
+    return this.get(key);
   }
 
   /**
@@ -80,7 +69,9 @@ export class Database {
    * @param key - The key
    */
   get(key: string): any {
-    return get(this, key);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+
+    return get(this.all(), key, this.separator);
   }
 
   /**
@@ -89,7 +80,12 @@ export class Database {
    * @param key - The key
    */
   delete(key: string): void {
-    del(this, key);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+
+    const data = del(this.all(), key, this.separator);
+
+    fs.writeFileSync(this.path, JSON.stringify(data, null));
   }
 
   /**
@@ -98,21 +94,25 @@ export class Database {
    * @param key - The key
    */
   has(key: string): boolean {
-    return has(this, key);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+
+    return get(this.all(), key, this.separator) !== undefined;
   }
 
   /**
    * Get the JSON file
    */
   all(): Record<string, any> {
-    return all(this);
+    return JSON.parse(fs.readFileSync(this.path, "utf8"));
   }
 
   /**
    * Delete all saved data
    */
   clear(): Record<string, any> {
-    return clear(this);
+    fs.writeFileSync(this.path, "{}");
+
+    return this.all();
   }
 
   /**
@@ -122,7 +122,19 @@ export class Database {
    * @param item - The item
    */
   push(key: string, item: any): Array<any> {
-    return push(this, key, item);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (item === undefined) throw new BelinDBError(Errors.InvalidValue);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    let array: Array<any> = this.get(key);
+
+    array.push(item);
+
+    this.set(key, array);
+
+    return this.get(key);
   }
 
   /**
@@ -132,7 +144,20 @@ export class Database {
    * @param item - The item
    */
   pull(key: string, item: any): Array<any> {
-    return pull(this, key, item);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (item === undefined) throw new BelinDBError(Errors.InvalidValue);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    let array: Array<any> = this.get(key);
+
+    this.set(
+      key,
+      array.filter((i: any) => i !== item)
+    );
+
+    return this.get(key);
   }
 
   /**
@@ -145,7 +170,12 @@ export class Database {
     predicate: (value: any, index: number, array: any[]) => boolean,
     thisArg?: any
   ): Array<any> {
-    return filter(this, key, predicate, thisArg);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    return this.get(key).filter(predicate, thisArg);
   }
 
   /**
@@ -158,7 +188,12 @@ export class Database {
     predicate: (value: any, index: number, obj: Array<any>) => boolean,
     thisArg?: any
   ): any {
-    return find(this, key, predicate, thisArg);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    return this.get(key).find(predicate, thisArg);
   }
 
   /**
@@ -171,7 +206,12 @@ export class Database {
     callbackfn: (value: any, index: number, array: Array<any>) => unknown,
     thisArg?: any
   ): Array<unknown> {
-    return map(this, key, callbackfn, thisArg);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    return this.get(key).map(callbackfn, thisArg);
   }
 
   /**
@@ -180,7 +220,14 @@ export class Database {
    * @param key - The key
    */
   random(key: string): Array<any> {
-    return random(this, key);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    const array: Array<any> = this.get(key);
+
+    return array[Math.floor(Math.random() * array.length)];
   }
 
   /**
@@ -189,7 +236,12 @@ export class Database {
    * @param key - The key
    */
   size(key: string): number {
-    return size(this, key);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    return this.get(key).length;
   }
 
   /**
@@ -202,7 +254,12 @@ export class Database {
     predicate: (value: any, index: number, array: Array<any>) => unknown,
     thisArg?: any
   ): boolean {
-    return some(this, key, predicate, thisArg);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    return this.get(key).some(predicate, thisArg);
   }
 
   /**
@@ -211,7 +268,12 @@ export class Database {
    * @param key - The key
    */
   sort(key: string, compareFn?: (a: any, b: any) => number): Array<any> {
-    return sort(this, key, compareFn);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (!Array.isArray(this.get(key)))
+      throw new BelinDBError(Errors.DataNotAnArray);
+
+    return this.get(key).sort(compareFn);
   }
 
   /**
@@ -221,7 +283,16 @@ export class Database {
    * @param number - The number
    */
   add(key: string, number: number): number {
-    return add(this, key, number);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (number === undefined || isNaN(number))
+      throw new BelinDBError(Errors.InvalidValue);
+    if (isNaN(this.get(key)))
+      throw new BelinDBError(Errors.DataNotANumber, key);
+
+    this.set(key, this.get(key) + number);
+
+    return this.get(key);
   }
 
   /**
@@ -231,6 +302,22 @@ export class Database {
    * @param number - The number
    */
   remove(key: string, number: number): number {
-    return remove(this, key, number);
+    if (!key) throw new BelinDBError(Errors.InvalidKey);
+    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
+    if (number === undefined || isNaN(number))
+      throw new BelinDBError(Errors.InvalidValue);
+    if (isNaN(this.get(key)))
+      throw new BelinDBError(Errors.DataNotANumber, key);
+
+    this.set(
+      key,
+      this.belowZero
+        ? this.get(key) - number
+        : this.get(key) - number <= 1
+        ? 1
+        : this.get(key) - number
+    );
+
+    return this.get(key);
   }
 }
