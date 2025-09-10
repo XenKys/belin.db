@@ -134,7 +134,7 @@ export class Database {
 
     this.set(key, array);
 
-    return this.get(key);
+    return this.get<Array<T>>(key);
   }
 
   /**
@@ -157,61 +157,7 @@ export class Database {
       array.filter((i: any) => i !== item)
     );
 
-    return this.get(key);
-  }
-
-  /**
-   * Returns the elements of an array that meet the condition specified in a callback function
-   *
-   * @param key - The key
-   */
-  filter(
-    key: string,
-    predicate: (value: any, index: number, array: any[]) => boolean,
-    thisArg?: any
-  ): Array<any> {
-    if (!key) throw new BelinDBError(Errors.InvalidKey);
-    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
-    if (!Array.isArray(this.get(key)))
-      throw new BelinDBError(Errors.DataNotAnArray);
-
-    return this.get(key).filter(predicate, thisArg);
-  }
-
-  /**
-   * Returns the value of the first element in the array where predicate is true, and undefined otherwise
-   *
-   * @param key - The key
-   */
-  find(
-    key: string,
-    predicate: (value: any, index: number, obj: Array<any>) => boolean,
-    thisArg?: any
-  ): any {
-    if (!key) throw new BelinDBError(Errors.InvalidKey);
-    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
-    if (!Array.isArray(this.get(key)))
-      throw new BelinDBError(Errors.DataNotAnArray);
-
-    return this.get(key).find(predicate, thisArg);
-  }
-
-  /**
-   * Calls a defined callback function on each element of an array, and returns an array that contains the results
-   *
-   * @param key - The key
-   */
-  map(
-    key: string,
-    callbackfn: (value: any, index: number, array: Array<any>) => unknown,
-    thisArg?: any
-  ): Array<unknown> {
-    if (!key) throw new BelinDBError(Errors.InvalidKey);
-    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
-    if (!Array.isArray(this.get(key)))
-      throw new BelinDBError(Errors.DataNotAnArray);
-
-    return this.get(key).map(callbackfn, thisArg);
+    return this.get<Array<T>>(key);
   }
 
   /**
@@ -242,38 +188,6 @@ export class Database {
       throw new BelinDBError(Errors.DataNotAnArray);
 
     return this.get(key).length;
-  }
-
-  /**
-   * Determines whether the specified callback function returns true for any element of an array
-   *
-   * @param key - The key
-   */
-  some(
-    key: string,
-    predicate: (value: any, index: number, array: Array<any>) => unknown,
-    thisArg?: any
-  ): boolean {
-    if (!key) throw new BelinDBError(Errors.InvalidKey);
-    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
-    if (!Array.isArray(this.get(key)))
-      throw new BelinDBError(Errors.DataNotAnArray);
-
-    return this.get(key).some(predicate, thisArg);
-  }
-
-  /**
-   * Sorts an array in place
-   *
-   * @param key - The key
-   */
-  sort(key: string, compareFn?: (a: any, b: any) => number): Array<any> {
-    if (!key) throw new BelinDBError(Errors.InvalidKey);
-    if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
-    if (!Array.isArray(this.get(key)))
-      throw new BelinDBError(Errors.DataNotAnArray);
-
-    return this.get(key).sort(compareFn);
   }
 
   /**
