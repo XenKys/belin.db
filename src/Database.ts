@@ -109,10 +109,10 @@ export class Database {
   /**
    * Delete all saved data
    */
-  clear(): Record<string, any> {
+  clear(): Database {
     fs.writeFileSync(this.path, "{}");
 
-    return this.all();
+    return this;
   }
 
   /**
