@@ -52,7 +52,7 @@ export class Database {
    * @param key - The key
    * @param value - The key's value
    */
-  set(key: string, value: any): any {
+  set<T, U>(key: string, value: T): U {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (value === undefined) throw new BelinDBError(Errors.InvalidValue);
 
@@ -60,7 +60,7 @@ export class Database {
 
     fs.writeFileSync(this.path, JSON.stringify(data));
 
-    return this.get(key);
+    return this.get<U>(key);
   }
 
   /**
@@ -68,7 +68,7 @@ export class Database {
    *
    * @param key - The key
    */
-  get(key: string): any {
+  get<T>(key: string): T {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
 
     return get(this.all(), key, this.separator);
@@ -121,18 +121,18 @@ export class Database {
    * @param key - The key
    * @param item - The item
    */
-  push(key: string, item: any): Array<any> {
+  push<T>(key: string, item: T): Array<T> {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (item === undefined) throw new BelinDBError(Errors.InvalidValue);
     if (!Array.isArray(this.get(key)))
       throw new BelinDBError(Errors.DataNotAnArray);
 
-    let array: Array<any> = this.get(key);
+    let array: Array<T> = this.get<Array<T>>(key);
 
     array.push(item);
 
-    this.set(key, array);
+    this.set<Array<T>, Array<T>>(key, array);
 
     return this.get<Array<T>>(key);
   }
@@ -143,18 +143,16 @@ export class Database {
    * @param key - The key
    * @param item - The item
    */
-  pull(key: string, item: any): Array<any> {
+  pull<T>(key: string, item: T): Array<T> {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (item === undefined) throw new BelinDBError(Errors.InvalidValue);
     if (!Array.isArray(this.get(key)))
       throw new BelinDBError(Errors.DataNotAnArray);
 
-    let array: Array<any> = this.get(key);
-
-    this.set(
+    this.set<Array<T>, Array<T>>(
       key,
-      array.filter((i: any) => i !== item)
+      this.get<Array<T>>(key).filter((i: T) => i !== item)
     );
 
     return this.get<Array<T>>(key);
@@ -165,13 +163,13 @@ export class Database {
    *
    * @param key - The key
    */
-  random(key: string): Array<any> {
+  random<T>(key: string): T {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (!Array.isArray(this.get(key)))
       throw new BelinDBError(Errors.DataNotAnArray);
 
-    const array: Array<any> = this.get(key);
+    const array: Array<T> = this.get<Array<T>>(key);
 
     return array[Math.floor(Math.random() * array.length)];
   }
@@ -181,13 +179,13 @@ export class Database {
    *
    * @param key - The key
    */
-  size(key: string): number {
+  size<T>(key: string): number {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (!Array.isArray(this.get(key)))
       throw new BelinDBError(Errors.DataNotAnArray);
 
-    return this.get(key).length;
+    return this.get<Array<T>>(key).length;
   }
 
   /**
@@ -204,9 +202,9 @@ export class Database {
     if (isNaN(this.get(key)))
       throw new BelinDBError(Errors.DataNotANumber, key);
 
-    this.set(key, this.get(key) + number);
+    this.set<number, number>(key, this.get<number>(key) + number);
 
-    return this.get(key);
+    return this.get<number>(key);
   }
 
   /**
@@ -223,15 +221,15 @@ export class Database {
     if (isNaN(this.get(key)))
       throw new BelinDBError(Errors.DataNotANumber, key);
 
-    this.set(
+    this.set<number, number>(
       key,
       this.belowZero
-        ? this.get(key) - number
-        : this.get(key) - number <= 1
+        ? this.get<number>(key) - number
+        : this.get<number>(key) - number <= 1
         ? 1
-        : this.get(key) - number
+        : this.get<number>(key) - number
     );
 
-    return this.get(key);
+    return this.get<number>(key);
   }
 }
