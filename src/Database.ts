@@ -1,7 +1,7 @@
 import fs from "fs";
 import { extname, dirname } from "path";
 import { BelinDBError, Errors } from "./utils";
-import { del, get, set } from "./base";
+import * as base from "./base";
 
 export interface DatabaseOptions {
   separator?: string;
@@ -56,7 +56,7 @@ export class Database {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (value === undefined) throw new BelinDBError(Errors.InvalidValue);
 
-    const data = set(this.all(), key, value, this.separator);
+    const data = base.set(this.all(), key, value, this.separator);
 
     fs.writeFileSync(this.path, JSON.stringify(data));
 
@@ -71,7 +71,7 @@ export class Database {
   get<T>(key: string): T {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
 
-    return get(this.all(), key, this.separator);
+    return base.get(this.all(), key, this.separator);
   }
 
   /**
@@ -83,7 +83,7 @@ export class Database {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
 
-    const data = del(this.all(), key, this.separator);
+    const data = base.del(this.all(), key, this.separator);
 
     fs.writeFileSync(this.path, JSON.stringify(data, null));
   }
@@ -96,7 +96,7 @@ export class Database {
   has(key: string): boolean {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
 
-    return get(this.all(), key, this.separator) !== undefined;
+    return base.get(this.all(), key, this.separator) !== undefined;
   }
 
   /**
