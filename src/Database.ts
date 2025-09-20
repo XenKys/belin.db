@@ -52,7 +52,7 @@ export class Database {
    * @param key - The key
    * @param value - The key's value
    */
-  set<T, U>(key: string, value: T): U {
+  set<T = unknown, U = unknown>(key: string, value: T): U {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (value === undefined) throw new BelinDBError(Errors.InvalidValue);
 
@@ -68,7 +68,7 @@ export class Database {
    *
    * @param key - The key
    */
-  get<T>(key: string): T {
+  get<T = unknown>(key: string): T {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
 
     return base.get(this.all(), key, this.separator);
@@ -121,7 +121,7 @@ export class Database {
    * @param key - The key
    * @param item - The item
    */
-  push<T>(key: string, item: T): Array<T> {
+  push<T = unknown>(key: string, item: T): Array<T> {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (item === undefined) throw new BelinDBError(Errors.InvalidValue);
@@ -143,7 +143,7 @@ export class Database {
    * @param key - The key
    * @param item - The item
    */
-  pull<T>(key: string, item: T): Array<T> {
+  pull<T = unknown>(key: string, item: T): Array<T> {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (item === undefined) throw new BelinDBError(Errors.InvalidValue);
@@ -163,7 +163,7 @@ export class Database {
    *
    * @param key - The key
    */
-  random<T>(key: string): T {
+  random<T = unknown>(key: string): T {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (!Array.isArray(this.get(key)))
@@ -179,7 +179,7 @@ export class Database {
    *
    * @param key - The key
    */
-  size<T>(key: string): number {
+  size<T = unknown>(key: string): number {
     if (!key) throw new BelinDBError(Errors.InvalidKey);
     if (!this.has(key)) throw new BelinDBError(Errors.DataNotFound, key);
     if (!Array.isArray(this.get(key)))
